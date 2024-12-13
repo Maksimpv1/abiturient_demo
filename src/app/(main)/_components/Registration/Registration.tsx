@@ -15,6 +15,7 @@ import { ValidityState } from './ValidationScheme'
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { useAppDispatch } from "@/app/lib/storeHooks";
 import { auth } from "@/services/firebase";
+import CustomAlert from "@/app/components/ui/CustomAlert/CustomAlert";
 
 interface IUserInfo {
   idNumber: string,
@@ -54,6 +55,7 @@ const RegistrationProfile = () => {
 
   return (
     <Container>
+      <CustomAlert/>
       <Wrapper>
         <Title>Регистрация</Title>
         <Formik
