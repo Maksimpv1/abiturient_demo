@@ -1,6 +1,5 @@
 "use client";
 
-import * as yup from "yup";
 import { registration } from "./registrationDate";
 import {
   BtnFormContainer,
@@ -12,35 +11,46 @@ import { Formik, getIn } from "formik";
 import InputField from "@/app/components/ui/InputField/InputField";
 import Button from "@/app/components/ui/Button/Button";
 import Title from "@/app/components/ui/Title/Title";
+import { ValidityState } from './ValidationScheme'
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { useAppDispatch } from "@/app/lib/storeHooks";
+import { auth } from "@/services/firebase";
+
+interface IUserInfo {
+  idNumber: string,
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+  confirmPassword: string,
+  
+}
 
 const RegistrationProfile = () => {
-  const ValidityState = yup.object().shape({
-    idNumber: yup
-      .string()
-      .typeError("Введите верный Id")
-      .required("Обязательное поле"),
-    firstName: yup
-      .string()
-      .typeError("Должно быть строкой")
-      .required("Обязательное поле"),
-    lastName: yup
-      .string()
-      .typeError("Должно быть строкой")
-      .required("Обязательное поле"),
-    email: yup
-      .string()
-      .email("Введите верный Email")
-      .required("Обязательное поле"),
-    password: yup
-      .string()
-      .typeError("Должно быть строкой")
-      .required("Обязательное поле")
-      .min(8, "Min 8 symbols"),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref("password")], "Пароли не совпадают")
-      .required("Обязательное поле"),
-  });
+
+  const dispatch = useAppDispatch()
+
+  const handleRegistration = (email:string,idNumber:string,firstName:string,lastName:string,password:string) => {
+    createUserWithEmailAndPassword(auth, email, password)
+        .then(({ user })=>{
+            const displayName = (firstName + ' ' + lastName) 
+            console.log(displayName)
+        })
+        .catch((error) => {
+          const errorCode = error.code; 
+          const errorMessage = error.message; 
+
+          if (errorCode === "auth/email-already-in-use") {
+            alert("Такой пользователь уже существует");
+          } else if (errorCode === "auth/invalid-email") {
+            alert("Некорректный email");
+          } else if (errorCode === "auth/weak-password") {
+            alert("Пароль слишком слабый");
+          } else {
+            alert(`Ошибка: ${errorMessage}`);
+          }
+        });
+  }
 
   return (
     <Container>
@@ -56,8 +66,8 @@ const RegistrationProfile = () => {
             confirmPassword: "",
           }}
           validateOnBlur
-          onSubmit={() => {
-            console.log("зареган");
+          onSubmit={(userInfo:IUserInfo) => {
+            handleRegistration(userInfo.email,userInfo.idNumber,userInfo.firstName,userInfo.lastName,userInfo.password)
           }}
           validationSchema={ValidityState}
         >

@@ -12,8 +12,10 @@ import {
 import Button from "@/app/components/ui/Button/Button";
 import InputField from "@/app/components/ui/InputField/InputField";
 import Title from "@/app/components/ui/Title/Title";
+import { auth } from "@/services/firebase";
 
 const LoginProfile = () => {
+
   const ValidityState = yup.object().shape({
     idNumber: yup
       .string()
