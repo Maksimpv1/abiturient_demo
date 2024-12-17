@@ -1,3 +1,5 @@
+'use client'
+
 import Instagram from "@/app/components/ui/icons/Instagram";
 import Vk from "@/app/components/ui/icons/Vk";
 import Telegram from "@/app/components/ui/icons/Telegram";

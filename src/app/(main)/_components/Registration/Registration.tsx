@@ -16,7 +16,7 @@ import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { useAppDispatch } from "@/app/lib/storeHooks";
 import { auth } from "@/services/firebase";
 import CustomAlert from "@/app/components/ui/CustomAlert/CustomAlert";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PushNotification from "@/app/components/ui/PushNotification/PushNotification";
 
 interface IUserInfo {
@@ -65,7 +65,14 @@ const RegistrationProfile = () => {
             handleAlertText(`Ошибка: ${errorMessage}`);
           }
         });
-  }
+  } 
+   const [isLoading, setIsLoading] = useState<boolean>(false)
+    useEffect(()=>{
+      setIsLoading(true)
+    },[])
+    if(!isLoading){
+      return(<div>loading ....</div>)
+    }
 
   return (
     <Container>

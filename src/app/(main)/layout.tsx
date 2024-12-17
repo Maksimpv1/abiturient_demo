@@ -4,6 +4,7 @@ import Header from "./_components/Header/Header";
 import MainFooter from "./_components/MainFooter/MainFooter";
 
 const MainLoyout = async ({ children }: { children: React.ReactNode }) => {
+  await new Promise((resolve) => setTimeout(resolve, 5 * 1000))
   return (
     <div className={styles.layoutWrapper}>
       <div className={styles.ui_container}>
