@@ -16,6 +16,8 @@ import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { useAppDispatch } from "@/app/lib/storeHooks";
 import { auth } from "@/services/firebase";
 import CustomAlert from "@/app/components/ui/CustomAlert/CustomAlert";
+import { useEffect, useState } from "react";
+import PushNotification from "@/app/components/ui/PushNotification/PushNotification";
 
 interface IUserInfo {
   idNumber: string,
@@ -29,33 +31,53 @@ interface IUserInfo {
 
 const RegistrationProfile = () => {
 
+  const [openAlert, setOpenAlert] = useState<boolean>(false)
+  const [alertText, setAlertText] = useState<string>('')
+
   const dispatch = useAppDispatch()
+
+  const handleCloseAlert = () => {
+    setOpenAlert(!openAlert)
+    console.log(openAlert)
+  }
+  const handleAlertText = (text:string) => {
+    setAlertText(text)
+    setOpenAlert(true)
+  }
 
   const handleRegistration = (email:string,idNumber:string,firstName:string,lastName:string,password:string) => {
     createUserWithEmailAndPassword(auth, email, password)
-        .then(({ user })=>{
-            const displayName = (firstName + ' ' + lastName) 
-            console.log(displayName)
+        .then(({ user })=>{         
+          const displayName = (firstName + ' ' + lastName) 
+          handleAlertText(displayName)
         })
         .catch((error) => {
           const errorCode = error.code; 
           const errorMessage = error.message; 
 
           if (errorCode === "auth/email-already-in-use") {
-            alert("Такой пользователь уже существует");
+            handleAlertText("Такой пользователь уже существует");
           } else if (errorCode === "auth/invalid-email") {
-            alert("Некорректный email");
+            handleAlertText("Некорректный email");
           } else if (errorCode === "auth/weak-password") {
-            alert("Пароль слишком слабый");
+            handleAlertText("Пароль слишком слабый");
           } else {
-            alert(`Ошибка: ${errorMessage}`);
+            handleAlertText(`Ошибка: ${errorMessage}`);
           }
         });
-  }
+  } 
+   const [isLoading, setIsLoading] = useState<boolean>(false)
+    useEffect(()=>{
+      setIsLoading(true)
+    },[])
+    if(!isLoading){
+      return(<div>loading ....</div>)
+    }
 
   return (
     <Container>
-      <CustomAlert/>
+      {openAlert && <CustomAlert children={alertText} setOpen={handleCloseAlert}/>}
+      <PushNotification/>
       <Wrapper>
         <Title>Регистрация</Title>
         <Formik
