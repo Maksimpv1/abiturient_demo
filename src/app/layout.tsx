@@ -6,7 +6,7 @@ import Header from "./(main)/_components/Header/Header";
 import MainFooter from "./(main)/_components/MainFooter/MainFooter";
 
 export const metadata: Metadata = {
-  title: "Abiturient",
+  title: "Student",
 };
 
 export default function RootLayout({
@@ -20,7 +20,7 @@ export default function RootLayout({
       <div className={styles.layoutWrapper}>
       <div className={styles.ui_container}>
         <div className={styles.headerWrapper}>
-          <Header />
+          123
         </div>
       </div>
 

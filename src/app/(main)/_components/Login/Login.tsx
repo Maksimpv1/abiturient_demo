@@ -13,26 +13,10 @@ import Button from "@/app/components/ui/Button/Button";
 import InputField from "@/app/components/ui/InputField/InputField";
 import Title from "@/app/components/ui/Title/Title";
 import { auth } from "@/services/firebase";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useTransition } from "react";
 
 const LoginProfile = () => {
-  
-  const [isPending, startTransition] = useTransition();
 
-  useEffect(()=>{   
-
-    const fetchData = async () => {
-      startTransition(() => {
-          if(!loginData) return
-      });
-    };
-  
-    fetchData();
-  
-    return () => {
-      fetchData();
-    };
-  },[loginData])   
 
   const ValidityState = yup.object().shape({
     idNumber: yup
@@ -45,7 +29,6 @@ const LoginProfile = () => {
       .required("Обязательное поле"),
   });
 
-  if(!isPending) {return <>Loading...</>}else
   return (
     <Container>
       <Wrapper>
@@ -88,7 +71,7 @@ const LoginProfile = () => {
                 <StyledLink href={"/registration"}>
                   Зарегестрироваться
                 </StyledLink>
-                <Button text={"Войти"} fontSize={"24"} type={"submite"} />
+                <Button text={"Войти"} fontSize={"24"} type={"submit"} />
               </BtnFormContainer>
             </form>
           )}

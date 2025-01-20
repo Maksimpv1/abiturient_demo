@@ -4,7 +4,6 @@ import * as SC from "./Welcom.style";
 import { Wrapper } from "@/app/components/ui/StandartStyles/StandartStyles.style";
 import Button from "@/app/components/ui/Button/Button";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const WelcomWeb = () => {
   const router = useRouter();
@@ -15,13 +14,6 @@ const WelcomWeb = () => {
   const handleClickRegistration = () => {
     router.push("/registration");
   };
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-    useEffect(()=>{
-      setIsLoading(true)
-    },[])
-    if(!isLoading){
-      return(<div>loading ....</div>)
-    }
   return (
     <div style={{ height: "100%" }}>
       <Wrapper>

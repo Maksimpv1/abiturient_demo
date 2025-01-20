@@ -3,7 +3,6 @@
 import Image from "next/image";
 import * as SC from "./Header.style";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const Header = () => {
   const router = useRouter();
@@ -12,13 +11,7 @@ const Header = () => {
     if (pathname != "/") router.push("/");
   };
 
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  useEffect(()=>{
-    setIsLoading(true)
-  },[])
-  if(!isLoading){
-    return(<div>loading ....</div>)
-  }
+
   return (
     <SC.ImgContainer>
       <Image

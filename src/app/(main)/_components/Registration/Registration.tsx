@@ -13,10 +13,9 @@ import Button from "@/app/components/ui/Button/Button";
 import Title from "@/app/components/ui/Title/Title";
 import { ValidityState } from './ValidationScheme'
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { useAppDispatch } from "@/app/lib/storeHooks";
 import { auth } from "@/services/firebase";
 import CustomAlert from "@/app/components/ui/CustomAlert/CustomAlert";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PushNotification from "@/app/components/ui/PushNotification/PushNotification";
 
 interface IUserInfo {
@@ -33,8 +32,6 @@ const RegistrationProfile = () => {
 
   const [openAlert, setOpenAlert] = useState<boolean>(false)
   const [alertText, setAlertText] = useState<string>('')
-
-  const dispatch = useAppDispatch()
 
   const handleCloseAlert = () => {
     setOpenAlert(!openAlert)
@@ -66,13 +63,6 @@ const RegistrationProfile = () => {
           }
         });
   } 
-   const [isLoading, setIsLoading] = useState<boolean>(false)
-    useEffect(()=>{
-      setIsLoading(true)
-    },[])
-    if(!isLoading){
-      return(<div>loading ....</div>)
-    }
 
   return (
     <Container>
@@ -120,7 +110,7 @@ const RegistrationProfile = () => {
               ))}
               <BtnFormContainer>
                 <StyledLink href={"/login"}>Войти</StyledLink>
-                <Button text={"Регистрация"} fontSize={"24"} type={"submite"} />
+                <Button text={"Регистрация"} fontSize={"24"} type={"submit"} />
               </BtnFormContainer>
             </form>
           )}
