@@ -20,7 +20,7 @@ export default function RootLayout({
       <div className={styles.layoutWrapper}>
       <div className={styles.ui_container}>
         <div className={styles.headerWrapper}>
-          123
+          <Header/>
         </div>
       </div>
 
